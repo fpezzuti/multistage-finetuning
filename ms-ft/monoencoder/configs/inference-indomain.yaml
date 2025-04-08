@@ -1,0 +1,50 @@
+model:
+  model_name_or_path: null
+  depth: 100
+  freeze_position_embeddings: true
+  loss_function:
+    class_path: LocalizedContrastive
+    init_args:
+      reduction: mean
+  compile_model: true
+seed_everything: 42
+data:
+  test_ir_dataset_paths:
+    - ./../../data/runs/baseline/bm25/msmarco-passage-trec-dl-2020-judged.run
+    - ./../../data/runs/baseline/bm25/msmarco-passage-trec-dl-2019-judged.run
+    - ./../../data/runs/baseline/bm25/msmarco-passage-trec-dl-hard.run
+    - ./../../data/runs/baseline/bm25/msmarco-passage-dev-small.run
+    - ./../../data/runs/baseline/colbert/msmarco-passage-trec-dl-2020-judged.run
+    - ./../../data/runs/baseline/colbert/msmarco-passage-trec-dl-2019-judged.run
+    - ./../../data/runs/baseline/colbert/msmarco-passage-trec-dl-hard.run
+    - ./../../data/runs/baseline/colbert/msmarco-passage-dev-small.run
+    - ./../../data/runs/baseline/tasb/msmarco-passage-trec-dl-2020-judged.run
+    - ./../../data/runs/baseline/tasb/msmarco-passage-trec-dl-2019-judged.run
+    - ./../../data/runs/baseline/tasb/msmarco-passage-trec-dl-hard.run
+    - ./../../data/runs/baseline/tasb/msmarco-passage-dev-small.run
+    - ./../../data/runs/baseline/contriever/msmarco-passage-trec-dl-2020-judged.run
+    - ./../../data/runs/baseline/contriever/msmarco-passage-trec-dl-2019-judged.run
+    - ./../../data/runs/baseline/contriever/msmarco-passage-trec-dl-hard.run
+    - ./../../data/runs/baseline/contriever/msmarco-passage-dev-small.run
+  truncate: true
+  max_length: 256
+  batch_size: 32
+  test_batch_size: 32
+  depth: 100
+  shuffle_queries: true
+  shuffle_docs: true
+  num_relevant_samples: -1
+  num_workers: 2
+trainer:
+  accelerator: auto
+  strategy: auto
+  devices: auto
+  num_nodes: 1
+  precision: bf16-mixed
+  callbacks:
+    - class_path: PredictionWriter
+      init_args:
+        overwrite: true
+  logger: null
+  inference_mode: true
+ckpt_path: null

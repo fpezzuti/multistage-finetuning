@@ -1,0 +1,9 @@
+torch==1.13.1
+lightning
+ir_datasets
+pandas
+transformers
+trectools
+tensorboard
+more_itertools
+sentence_transformers
